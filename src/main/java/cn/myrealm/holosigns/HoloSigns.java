@@ -6,6 +6,7 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -27,6 +28,12 @@ public final class HoloSigns extends JavaPlugin {
     public void onEnable() {
         instance = this;
         managers = new ArrayList<>();
+        
+        File file = new File(getDataFolder(),"config.yml");
+        if(!file.exists()) {
+            saveDefaultConfig();
+        }
+        
         managers.add(new LanguageManager());
     }
 
@@ -45,8 +52,8 @@ public final class HoloSigns extends JavaPlugin {
 
     /**
      * @Description: reload the plugin
-     * @Param:
-     * @return:
+     * @Param: []
+     * @return: void
      * @Author: rzt1020
      * @Date: 2022/9/28
     **/

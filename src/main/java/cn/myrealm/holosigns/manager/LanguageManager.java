@@ -20,10 +20,11 @@ public class LanguageManager extends Manager{
     private final String lang;
     private final File file;
     private final YamlConfiguration langYml;
+    
     /**
      * @Description: Constructor
-     * @Param:
-     * @return:
+     * @Param: []
+     * @return: 
      * @Author: rzt1020
      * @Date: 2022/9/28
     **/
@@ -46,7 +47,7 @@ public class LanguageManager extends Manager{
             String text = langYml.getString(key,"");
             return HoloSigns.parseColor(text);
         }
-        throw new IllegalArgumentException("No Such Language Key");
+        throw new IllegalArgumentException("No such language key");
     }
     
     /**
@@ -56,8 +57,11 @@ public class LanguageManager extends Manager{
      * @Author: rzt1020
      * @Date: 2022/9/28
     **/
-    public String getVarText(String key, Map<String,String> varMap) {
+    public String getVarText(@NonNull String key, Map<String,String> varMap) {
         String text = getText(key);
+        if (Objects.isNull(varMap)) {
+            return text;
+        }
         for (String var : varMap.keySet()) {
             if (Objects.nonNull(varMap.get(var))) {
                 text.replace("%"+var+"%",varMap.get(var));

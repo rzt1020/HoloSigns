@@ -1,7 +1,7 @@
 package cn.myrealm.holosigns;
 
-import cn.myrealm.holosigns.manager.LanguageManager;
-import cn.myrealm.holosigns.manager.Manager;
+import cn.myrealm.holosigns.managers.LanguageManager;
+import cn.myrealm.holosigns.managers.Manager;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -32,9 +32,26 @@ public final class HoloSigns extends JavaPlugin {
         File file = new File(getDataFolder(),"config.yml");
         if(!file.exists()) {
             saveDefaultConfig();
+            resourcesOutput();
         }
         
         managers.add(new LanguageManager());
+        getLogger().info(LanguageManager.instance.getText("plugin-init"));
+
+        if (!Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays")) {
+            getLogger().severe(LanguageManager.instance.getText("holo-displays-unload"));
+            getLogger().severe(LanguageManager.instance.getText("plugin-disable"));
+            setEnabled(false);
+            return;
+        }
+        if (!Bukkit.getPluginManager().isPluginEnabled("ProtocolLib")) {
+            getLogger().severe(LanguageManager.instance.getText("protocol-lib-unload"));
+            getLogger().severe(LanguageManager.instance.getText("plugin-disable"));
+            setEnabled(false);
+            return;
+        }
+
+        getLogger().info(LanguageManager.instance.getText("plugin-init-completed"));
     }
 
     /**
@@ -62,6 +79,18 @@ public final class HoloSigns extends JavaPlugin {
             manager.reload();
         }
     }
+    
+    /**
+     * @Description: Resources output
+     * @Param: []
+     * @return: void
+     * @Author: rzt1020
+     * @Date: 2022/9/28
+    **/
+    public void resourcesOutput() {
+        saveResource("language/chinese.yml",false);
+    }
+
     /**
      * @Description: Color symbols and dex for strings
      * @Param: [s]
@@ -79,4 +108,5 @@ public final class HoloSigns extends JavaPlugin {
         }
         return s.replace("&","§").replace("§§","&");
     }
+
 }

@@ -1,9 +1,44 @@
 name: HoloSigns
 version: '${project.version}'
 main: cn.myrealm.holosigns.HoloSigns
-api-version: 1.8
+api-version: 1.14
 authors: [ ManyouTeam ]
 softdepend:
   - HolographicDisplays
   - ProtocolLib
-
+commands:
+  holosigns:
+    aliases:
+      - signs
+      - sign
+    description: Base command
+    permission: holosigns.command.holosigns
+permissions:
+  holosigns.*:
+    description: Root permission
+    default: op
+    children:
+      holosigns.command.*: true
+  holosigns.command.*:
+    description: All commands
+    default: op
+    children:
+      holosigns.command.holosigns: true
+      holosigns.command.reload: true
+      holosigns.command.delete: true
+  holosigns.command.holosigns:
+    description: Holosigns command
+    default: true
+  holosigns.command.reload:
+    description: reload plugin
+    default: op
+  holosigns.command.delete:
+    description: delete slef sign
+    default: true
+  holosigns.use.*:
+    description: All usages
+    default: op
+    children:
+      holosigns.use.see: true
+      holosigns.use.like: true
+      holosigns.use.unlike: true

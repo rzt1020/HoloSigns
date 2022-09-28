@@ -1,7 +1,6 @@
-package cn.myrealm.holosigns.manager;
+package cn.myrealm.holosigns.managers;
 
 import cn.myrealm.holosigns.HoloSigns;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
@@ -17,6 +16,7 @@ import java.util.Objects;
  **/
 public class LanguageManager extends Manager{
     // vars
+    public static LanguageManager instance;
     private final String lang;
     private final File file;
     private final YamlConfiguration langYml;
@@ -29,9 +29,9 @@ public class LanguageManager extends Manager{
      * @Date: 2022/9/28
     **/
     public LanguageManager() {
-        super();
+        instance = this;
         lang = HoloSigns.instance.getConfig().getString("language", "english");
-        file = new File(HoloSigns.instance.getDataFolder(),"lang/" + lang + ".yml");
+        file = new File(HoloSigns.instance.getDataFolder(),"language/" + lang + ".yml");
         langYml = YamlConfiguration.loadConfiguration(file);
     }
     

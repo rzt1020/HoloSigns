@@ -1,5 +1,6 @@
 package cn.myrealm.holosigns;
 
+import cn.myrealm.holosigns.commands.CommandHolosigns;
 import cn.myrealm.holosigns.managers.LanguageManager;
 import cn.myrealm.holosigns.managers.Manager;
 import net.md_5.bungee.api.ChatColor;
@@ -9,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -50,6 +52,7 @@ public final class HoloSigns extends JavaPlugin {
             setEnabled(false);
             return;
         }
+        Objects.requireNonNull(getCommand("holosigns")).setExecutor(new CommandHolosigns());
 
         getLogger().info(LanguageManager.instance.getText("plugin-init-completed"));
     }

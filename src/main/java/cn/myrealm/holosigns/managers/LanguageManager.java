@@ -17,8 +17,6 @@ import java.util.Objects;
 public class LanguageManager extends Manager{
     // vars
     public static LanguageManager instance;
-    private final String lang;
-    private final File file;
     private final YamlConfiguration langYml;
     
     /**
@@ -30,8 +28,8 @@ public class LanguageManager extends Manager{
     **/
     public LanguageManager() {
         instance = this;
-        lang = HoloSigns.instance.getConfig().getString("language", "english");
-        file = new File(HoloSigns.instance.getDataFolder(),"language/" + lang + ".yml");
+        String lang = HoloSigns.instance.getConfig().getString("language", "english");
+        File file = new File(HoloSigns.instance.getDataFolder(), "language/" + lang + ".yml");
         langYml = YamlConfiguration.loadConfiguration(file);
     }
     
@@ -64,9 +62,25 @@ public class LanguageManager extends Manager{
         }
         for (String var : varMap.keySet()) {
             if (Objects.nonNull(varMap.get(var))) {
-                text.replace("%"+var+"%",varMap.get(var));
+                text = text.replace("%"+var+"%",varMap.get(var));
             }
         }
+        return text;
+    }
+    
+    /**
+     * @Description: Adding variables to text
+     * @Param: [key, var, content]
+     * @return: java.lang.String
+     * @Author: rzt1020
+     * @Date: 2022/9/29
+    **/
+    public String getVarText(@NonNull String key, String var, String content) {
+        String text = getText(key);
+        if (Objects.isNull(var) || Objects.isNull(content)) {
+            return text;
+        }
+        text = text.replace("%"+var+"%",content);
         return text;
     }
 }

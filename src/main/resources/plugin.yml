@@ -12,7 +12,6 @@ commands:
       - signs
       - sign
     description: Base command
-    permission: holosigns.command.holosigns
 permissions:
   holosigns.*:
     description: Root permission

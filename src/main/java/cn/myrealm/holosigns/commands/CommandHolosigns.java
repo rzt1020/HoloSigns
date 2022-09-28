@@ -1,5 +1,7 @@
 package cn.myrealm.holosigns.commands;
 
+import cn.myrealm.holosigns.HoloSigns;
+import cn.myrealm.holosigns.listeners.SignCreateListener;
 import cn.myrealm.holosigns.managers.LanguageManager;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -18,7 +20,7 @@ import java.util.Map;
  **/
 public class CommandHolosigns implements CommandExecutor {
     // vars
-    private static Map<String,CommandExecutor> subCommands = new HashMap<>();
+    private static final Map<String,CommandExecutor> subCommands = new HashMap<>();
     static {
         subCommands.put("reload",new CommandReload());
     }
@@ -35,7 +37,12 @@ public class CommandHolosigns implements CommandExecutor {
             sender.sendMessage(LanguageManager.instance.getText("only-player"));
             return;
         }
-
+        Player player = (Player) sender;
+        if (player.hasPermission("holosigns.command.holosigns")) {
+            player.sendMessage(LanguageManager.instance.getVarText("create-sign","time_limit",
+                            String.valueOf(HoloSigns.instance.getConfig().getInt("time_limit",-1))));
+            SignCreateListener.registerListener(player);
+        }
     }
 
     /**
@@ -48,10 +55,10 @@ public class CommandHolosigns implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String s, String[] args) {
         if (cmd.getName().equals("holosigns")) {
-            if (args.length == 1) {
+            if (args.length == 0) {
                 executeCommand(sender);
             } else {
-                if (subCommands.keySet().contains(args[0])) {
+                if (subCommands.containsKey(args[0])) {
                     if (args.length > 1) {
                         args = Arrays.copyOfRange(args, 1, args.length);
                     } else {

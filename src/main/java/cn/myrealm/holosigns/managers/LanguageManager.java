@@ -55,14 +55,14 @@ public class LanguageManager extends Manager{
      * @Author: rzt1020
      * @Date: 2022/9/28
     **/
-    public String getVarText(@NonNull String key, Map<String,String> varMap) {
+    public String getVarText(@NonNull String key, Map<String,String> var_map) {
         String text = getText(key);
-        if (Objects.isNull(varMap)) {
+        if (Objects.isNull(var_map)) {
             return text;
         }
-        for (String var : varMap.keySet()) {
-            if (Objects.nonNull(varMap.get(var))) {
-                text = text.replace("%"+var+"%",varMap.get(var));
+        for (String var : var_map.keySet()) {
+            if (Objects.nonNull(var_map.get(var))) {
+                text = text.replace("%"+var+"%",var_map.get(var));
             }
         }
         return text;

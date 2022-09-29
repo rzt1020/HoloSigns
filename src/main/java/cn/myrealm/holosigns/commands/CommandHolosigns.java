@@ -20,9 +20,9 @@ import java.util.Map;
  **/
 public class CommandHolosigns implements CommandExecutor {
     // vars
-    private static final Map<String,CommandExecutor> subCommands = new HashMap<>();
+    private static final Map<String,CommandExecutor> sub_commands = new HashMap<>();
     static {
-        subCommands.put("reload",new CommandReload());
+        sub_commands.put("reload",new CommandReload());
     }
 
     /**
@@ -58,13 +58,13 @@ public class CommandHolosigns implements CommandExecutor {
             if (args.length == 0) {
                 executeCommand(sender);
             } else {
-                if (subCommands.containsKey(args[0])) {
+                if (sub_commands.containsKey(args[0])) {
                     if (args.length > 1) {
                         args = Arrays.copyOfRange(args, 1, args.length);
                     } else {
                         args = new String[0];
                     }
-                    subCommands.get(args[0]).onCommand(sender,cmd,s,args);
+                    sub_commands.get(args[0]).onCommand(sender,cmd,s,args);
                 } else {
                     sender.sendMessage(LanguageManager.instance.getText("no-such-command"));
                 }

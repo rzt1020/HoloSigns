@@ -3,9 +3,11 @@ package cn.myrealm.holosigns;
 import cn.myrealm.holosigns.commands.CommandHolosigns;
 import cn.myrealm.holosigns.managers.LanguageManager;
 import cn.myrealm.holosigns.managers.Manager;
+import cn.myrealm.holosigns.managers.SignManager;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ import java.util.regex.Pattern;
 
 public final class HoloSigns extends JavaPlugin {
     // vars
-    public static HoloSigns instance;
+    public static HoloSigns instance; // Plugin instance
     public static List<Manager> managers;
 
     /**
@@ -38,6 +40,7 @@ public final class HoloSigns extends JavaPlugin {
         }
         
         managers.add(new LanguageManager());
+        managers.add(new SignManager());
         getLogger().info(LanguageManager.instance.getText("plugin-init"));
 
         if (!Bukkit.getPluginManager().isPluginEnabled("HolographicDisplays")) {
@@ -101,7 +104,7 @@ public final class HoloSigns extends JavaPlugin {
      * @Author: rzt1020
      * @Date: 2022/9/28
     **/
-    public static String parseColor(String s){
+    public static String parseColor(@NonNull String s){
         Pattern pattern = Pattern.compile("<#[a-fA-F0-9]{6}>");
         Matcher match = pattern.matcher(s);
         while (match.find()) {

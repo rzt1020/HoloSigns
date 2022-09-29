@@ -1,2 +1,4 @@
 language: chinese
 time_limit: 30
+line_limit: 30
+visible_distance: 3.0

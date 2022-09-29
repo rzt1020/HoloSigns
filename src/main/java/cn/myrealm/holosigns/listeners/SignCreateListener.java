@@ -43,14 +43,16 @@ public class SignCreateListener {
             @EventHandler
             public void onChat(AsyncPlayerChatEvent event) {
                 if (player.equals(event.getPlayer())) {
+                    event.setCancelled(true);
                     String text = event.getMessage();
                     if (text.equals("cancel")) {
-                        HandlerList.unregisterAll(this);
                         player.sendMessage(LanguageManager.instance.getText("create-cancel"));
                     } else {
                         text = HoloSigns.parseColor(text);
                         SignManager.instance.create(text,player.getLocation(),player);
+                        player.sendMessage(LanguageManager.instance.getText("create-success"));
                     }
+                    HandlerList.unregisterAll(this);
                 }
             }
             
